@@ -2,7 +2,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const cryptoNewsHeaders = {
-  'X-Api-Key':import.meta.env.VITE_NEWS_API_KEY ,
+  'X-Api-Key': import.meta.env.VITE_NEWS_API_KEY,
 };
 
 const baseUrl = 'https://newsapi.org/v2/';
@@ -23,8 +23,9 @@ export const newsApi = createApi({
   baseQuery: baseQueryWithErrorHandling,
   endpoints: (builder) => ({
     getNews: builder.query({
-      query: ({ topic = 'Cryptomarkets', count = 10 }) =>
-        createRequest(`everything?q=${topic}&language=en&pageSize=${count=10}&sortBy=publishedAt`),
+      query: ({ newsCategory, count }) =>
+        createRequest(`everything?q=${encodeURIComponent(newsCategory)}&language=en&pageSize=${count}&sortBy=publishedAt`),
+
       keepUnusedDataFor: 500,
       refetchOnMountOrArgChange: true,
     }),
